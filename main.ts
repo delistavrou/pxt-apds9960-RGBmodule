@@ -1,5 +1,5 @@
-//% color="#31C7D5" weight=10 icon="\uf06e"
-namespace apds9960 {
+//% color="#F44336" weight=10 icon="\uf06e"
+namespace APDS9960RGB {
     const ADDR = 0x39
     const APDS9960_RAM = 0x00
     const APDS9960_ENABLE = 0x80
@@ -103,7 +103,7 @@ namespace apds9960 {
         return hue * 60/100;
     }
 
-    //% blockId=apds9960-RGBmodule_init block="APDS9960 Init"
+    //% blockId=APDS9960RGB_init block="Initialise Sensor"
     //% weight=100
     export function Init(): void {
         i2cwrite(ADDR, APDS9960_ATIME, 252) // default inte time 4x2.78ms
@@ -120,23 +120,23 @@ namespace apds9960 {
      * It should return 0xAB or 171
      */
     
-    //% blockId=apds9960-RGBmodule_getid block="ID"
+    //% blockId=APDS9960RGB_getid block="Get Sensor ID"
     //% weight=99
     export function id(): number {
         let chipid = i2cread(ADDR, APDS9960_ID);
         return chipid;
     }
     
-    //% blockId=apds9960-RGBmodule_colormode block="APDS9960 Color Mode"
+    //% blockId=APDS9960RGB_colormode block="Set Sensor Color Mode"
     //% weight=98
     export function ColorMode(): void {
         let tmp = i2cread(ADDR, APDS9960_ENABLE) | 0x2;
         i2cwrite(ADDR, APDS9960_ENABLE, tmp);
     }
     
-    //% blockId=apds9960-RGBmodule_readcolor block="APDS9960 Get Hue"
+    //% blockId=APDS9960RGB_readcolourhue block="Get Hue Value"
     //% weight=98
-    export function ReadColor(): number {
+    export function ReadColourHue(): number {
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
         while(!tmp){
             basic.pause(5);
@@ -155,9 +155,9 @@ namespace apds9960 {
         return hue
     }
 
-    //% blockId=apds9960-RGBmodule_readcolorR block="APDS9960 Get R"
+    //% blockId=APDS9960RGB_readcolourR block="Get R Value"
     //% weight=98
-    export function ReadColorR(): number {
+    export function ReadColourR(): number {
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
         while(!tmp){
             basic.pause(5);
@@ -176,9 +176,9 @@ namespace apds9960 {
         return r;
     }
 
-    //% blockId=apds9960-RGBmodule_readcolorG block="APDS9960 Get G"
+    //% blockId=APDS9960RGB_readcolourG block="Get G Value"
     //% weight=98
-    export function ReadColorG(): number {
+    export function ReadColourG(): number {
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
         while(!tmp){
             basic.pause(5);
@@ -198,9 +198,9 @@ namespace apds9960 {
     }
 
 
-    //% blockId=apds9960-RGBmodule_readcolorB block="APDS9960 Get B"
+    //% blockId=APDS9960RGB_readcolourB block="Get B Value"
     //% weight=98
-    export function ReadColorB(): number {
+    export function ReadColourB(): number {
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
         while(!tmp){
             basic.pause(5);
