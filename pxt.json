@@ -1,5 +1,5 @@
 {
-    "name": "APDS9960",
+    "name": "APDS9960RGB",
     "version": "0.3",
     "description": "APDS9960RGB Extension for microbit",
     "license": "MIT",
