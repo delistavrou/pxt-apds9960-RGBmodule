@@ -1,4 +1,4 @@
-# pxt-apds9960
+# pxt-apds9960 + RGB LED module
 
 #### Description
 This is the APDS9960 for microbit@makecode editor, for now there is only color detect but should be enough for June 1st children's day workshop.
@@ -18,6 +18,8 @@ Read the Chip's ID first, if it return 0x0 or 0xff check your wirings. If it rea
 
 The gesture engine won't work on 9930 and 9900, but the proximity and color sensing should be ok. 
 
+The RGB LED module is Keyestudio's RGB LED module (pins: GRBV)
+
 ## License
 
 MIT
@@ -28,5 +30,5 @@ MIT
 (The metadata above is needed for package search.)
 
 ```package
-apds9960=github:Kittenbot/pxt-apds9960
+APDS9960RGB=github:delistavrou/pxt-APDS9960RGB
 ```
