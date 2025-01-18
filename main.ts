@@ -1,10 +1,3 @@
-/*
-Riven
-load dependency
-"apds9960-RGBmodule": "file:../pxt-apds9960-RGBmodule"
-*/
-
-
 //% color="#31C7D5" weight=10 icon="\uf06e"
 namespace apds9960 {
     const ADDR = 0x39
