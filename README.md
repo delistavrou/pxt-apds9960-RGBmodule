@@ -4,9 +4,9 @@
 microbit@makecode editor: APDS9960 color detect interfaced to RGB LED module.
 
 #### Sources
-https://github.com/KittenBot/pxt-apds9960
 https://docs.broadcom.com/doc/AV02-4191EN
 https://wiki.keyestudio.com/Ks0032_keyestudio_RGB_LED_Module
+https://github.com/KittenBot/pxt-apds9960
 
 #### Install Guide
 Load this package by coping the ulr and paste into the add package panel.
