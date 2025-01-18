@@ -1,7 +1,7 @@
 /*
 Riven
 load dependency
-"apds9960": "file:../pxt-apds9960"
+"apds9960-RGBmodule": "file:../pxt-apds9960-RGBmodule"
 */
 
 
@@ -110,7 +110,7 @@ namespace apds9960 {
         return hue * 60/100;
     }
 
-    //% blockId=apds9960_init block="APDS9960 Init"
+    //% blockId=apds9960-RGBmodule_init block="APDS9960 Init"
     //% weight=100
     export function Init(): void {
         i2cwrite(ADDR, APDS9960_ATIME, 252) // default inte time 4x2.78ms
@@ -121,23 +121,27 @@ namespace apds9960 {
         // power on
         i2cwrite(ADDR, APDS9960_ENABLE, 0x01) // clear all interrupt
     }
+    
     /**
      * Gets APDS9960 CHIP ID
      * It should return 0xAB or 171
      */
-    //% blockId=apds9960_getid block="ID"
+    
+    //% blockId=apds9960-RGBmodule_getid block="ID"
     //% weight=99
     export function id(): number {
         let chipid = i2cread(ADDR, APDS9960_ID);
         return chipid;
     }
-    //% blockId=apds9960_colormode block="APDS9960 Color Mode"
+    
+    //% blockId=apds9960-RGBmodule_colormode block="APDS9960 Color Mode"
     //% weight=98
     export function ColorMode(): void {
         let tmp = i2cread(ADDR, APDS9960_ENABLE) | 0x2;
         i2cwrite(ADDR, APDS9960_ENABLE, tmp);
     }
-    //% blockId=apds9960_readcolor block="APDS9960 Get Color"
+    
+    //% blockId=apds9960-RGBmodule_readcolor block="APDS9960 Get Color Hue"
     //% weight=98
     export function ReadColor(): number {
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
@@ -156,6 +160,27 @@ namespace apds9960 {
         b = b*255/avg;
         let hue = rgb2hue(r,g,b);
         return hue
+    }
+
+    //% blockId=apds9960-RGBmodule_readcolor block="APDS9960 Get Color RGB"
+    //% weight=98
+    export function ReadColorRGB(): [number, number, number] {
+        let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
+        while(!tmp){
+            basic.pause(5);
+            tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
+        }
+        let c = i2cread(ADDR, APDS9960_CDATAL) + i2cread(ADDR, APDS9960_CDATAH)*256;
+        let r = i2cread(ADDR, APDS9960_RDATAL) + i2cread(ADDR, APDS9960_RDATAH)*256;
+        let g = i2cread(ADDR, APDS9960_GDATAL) + i2cread(ADDR, APDS9960_GDATAH)*256;
+        let b = i2cread(ADDR, APDS9960_BDATAL) + i2cread(ADDR, APDS9960_BDATAH)*256;
+        // map to rgb based on clear channel
+        let avg = c/3;
+        r = r*255/avg;
+        g = g*255/avg;
+        b = b*255/avg;
+        //let hue = rgb2hue(r,g,b);
+        return [r, g, b];hue
     }
 
 }
