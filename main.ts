@@ -162,9 +162,9 @@ namespace apds9960 {
         return hue
     }
 
-    //% blockId=apds9960-RGBmodule_readcolor block="APDS9960 Get Color RGB"
+    //% blockId=apds9960-RGBmodule_readcolorR block="APDS9960 Get Color R"
     //% weight=98
-    export function ReadColorRGB(): [number, number, number] {
+    export function ReadColorR(): number {
         let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
         while(!tmp){
             basic.pause(5);
@@ -180,7 +180,49 @@ namespace apds9960 {
         g = g*255/avg;
         b = b*255/avg;
         //let hue = rgb2hue(r,g,b);
-        return [r, g, b];hue
+        return r;
     }
 
+    //% blockId=apds9960-RGBmodule_readcolorG block="APDS9960 Get Color G"
+    //% weight=98
+    export function ReadColorG(): number {
+        let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
+        while(!tmp){
+            basic.pause(5);
+            tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
+        }
+        let c = i2cread(ADDR, APDS9960_CDATAL) + i2cread(ADDR, APDS9960_CDATAH)*256;
+        let r = i2cread(ADDR, APDS9960_RDATAL) + i2cread(ADDR, APDS9960_RDATAH)*256;
+        let g = i2cread(ADDR, APDS9960_GDATAL) + i2cread(ADDR, APDS9960_GDATAH)*256;
+        let b = i2cread(ADDR, APDS9960_BDATAL) + i2cread(ADDR, APDS9960_BDATAH)*256;
+        // map to rgb based on clear channel
+        let avg = c/3;
+        r = r*255/avg;
+        g = g*255/avg;
+        b = b*255/avg;
+        //let hue = rgb2hue(r,g,b);
+        return g;
+    }
+
+
+    //% blockId=apds9960-RGBmodule_readcolorB block="APDS9960 Get Color B"
+    //% weight=98
+    export function ReadColorB(): number {
+        let tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
+        while(!tmp){
+            basic.pause(5);
+            tmp = i2cread(ADDR, APDS9960_STATUS) & 0x1;
+        }
+        let c = i2cread(ADDR, APDS9960_CDATAL) + i2cread(ADDR, APDS9960_CDATAH)*256;
+        let r = i2cread(ADDR, APDS9960_RDATAL) + i2cread(ADDR, APDS9960_RDATAH)*256;
+        let g = i2cread(ADDR, APDS9960_GDATAL) + i2cread(ADDR, APDS9960_GDATAH)*256;
+        let b = i2cread(ADDR, APDS9960_BDATAL) + i2cread(ADDR, APDS9960_BDATAH)*256;
+        // map to rgb based on clear channel
+        let avg = c/3;
+        r = r*255/avg;
+        g = g*255/avg;
+        b = b*255/avg;
+        //let hue = rgb2hue(r,g,b);
+        return b;
+    }
 }
